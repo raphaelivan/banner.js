@@ -1,7 +1,5 @@
 # Banner
-** Banner is a simple  jquery slider( without controls )**
-
-Banner is a simple jquery slider.
+Banner is a simple  jquery slider( without controls )
 
 ## Usage
 
