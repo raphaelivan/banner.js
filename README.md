@@ -1,0 +1,4 @@
+banner
+======
+
+Simple slider banner
