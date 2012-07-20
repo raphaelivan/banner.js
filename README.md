@@ -8,10 +8,10 @@ $("div#banner img.slide").banner();
 ```
 
 ## Effects
-fade, slideDown, none( just hide)
+fade, slide, none( just hide)
 
 ```sh
-$("div#banner img.slide").banner( { effect: "slideDown" } );
+$("div#banner img.slide").banner( { effect: "slide" } );
 ```
 
 _Defining sleep config
