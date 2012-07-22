@@ -40,9 +40,9 @@
 
 		setInterval(function(){ move(); }, config.sleep);
 
+		$(this).css( {'display': 'none', 'width': config.width, 'height': config.height} );	
 	 	return $(this).each(function(index,image){			
 			images.push( image );
-			$(this).css( {'display': 'none', 'width': config.width, 'height': config.height} );	
 		});
 	};
 })( jQuery );
