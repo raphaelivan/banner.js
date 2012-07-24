@@ -8,12 +8,23 @@
 (function($){
 	$.fn.banner = function( options ){
 		var images = [],
-		current = 0,
-		config  = { 
+		current    = 0,
+		$this      = $(this),
+		config     = { 
 			effect: 'fade', sleep: 2000, effectTime: 2000, width: '400px', height: '200px'
 		};
 		
 		$.extend( config, options );
+		
+		var showFirst = function(){
+			/*
+			 	Show first image so that banner function is called.
+			*/		
+			if( images.length > 0){
+				$(images[0]).show();
+			}
+		};
+		
 	 	var move = function(){
 			$(images).hide();
 						
@@ -40,9 +51,12 @@
 
 		setInterval(function(){ move(); }, config.sleep);
 
-		$(this).css( {'display': 'none', 'width': config.width, 'height': config.height} );	
-	 	return $(this).each(function(index,image){			
+		$this.css( {'display': 'none', 'width': config.width, 'height': config.height} );
+		
+		$this.each(function(index,image){			
 			images.push( image );
 		});
+		
+		showFirst();
 	};
 })( jQuery );
