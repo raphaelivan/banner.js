@@ -5,58 +5,82 @@
 	Copyright (c) 2012 Raphael Ivan
 	Released under Mit Lincense
 */
-(function($){
-	$.fn.banner = function( options ){
-		var images = [],
-		current    = 0,
-		$this      = $(this),
-		config     = { 
-			effect: 'fade', sleep: 2000, effectTime: 2000, width: '400px', height: '200px'
-		};
+"use strict"
+;(function($){
+	$.fn.banner = function(options){
+		var images = []
+		, currentImage = 0
+		, self      = $(this)
+		, config     = { 
+			effect: 'fade'
+		 	, sleep: 2000
+			, effectTime: 2000
+			, width: '400px'
+			, height: '200px'
+		}
 		
-		$.extend( config, options );
-		
-		var showFirst = function(){
-			/*
-			 	Show first image so that banner function is called.
-			*/		
-			if( images.length > 0){
-				$(images[0]).show();
+		$.extend(config, options);
+				
+		var incrementCurrentImage = function(){
+			if (images.length <= currentImage + 1) {
+				currentImage = 0;
+			} else {
+				currentImage++;
 			}
-		};
-		
-	 	var move = function(){
-			$(images).hide();
-						
-			var effectTime = config.effectTime;
+			
+			return currentImage;
+		}
+	 	var slide = function(){
+			var effectTime, effect;
 
-			if( images.length <= current + 1 ){
-				current = 0;
-			}else{
-				current++;
-			}	
-
-			switch( config.effect ){
+			/*
+				Hide the current image before to show the next
+			*/
+			images[currentImage].hide();
+	
+			/*
+				Increment Current Image
+			*/
+			incrementCurrentImage();			
+			
+			effectTime = config.effectTime;
+			effect     = config.effect;	
+							
+			/*
+				Apply effect
+				Effects: slide, fade and none
+			*/
+			switch(effect){
 				case 'slide':
-					$(images[current]).slideDown( effectTime );
-					break;
+					return images[currentImage].slideDown(effectTime);
 				case 'none':
-					$(images[current]).hide();
-					break;
+					return images[currentImage].show();
 				default:
-					$(images[current]).fadeIn( effectTime );
-					break;
+					return images[currentImage].fadeIn(effectTime);
 			}									
 		};
 
-		setInterval(function(){ move(); }, config.sleep);
-
-		$this.css( {'display': 'none', 'width': config.width, 'height': config.height} );
+		setInterval( function(){ 
+			slide()
+			}
+		  , config.sleep
+		);
 		
-		$this.each(function(index,image){			
-			images.push( image );
+		self.each(function(index,image){			
+			images.push( 
+					$(image).css({
+						'display': 'none'
+						, 'width': config.width
+						, 'height': config.height
+				})
+			);
 		});
 		
-		showFirst();
+		/*
+		 	Show the first image so that banner function is called.
+		*/	
+		if (images.length > 0) {
+			images[0].show();
+		}
 	};
-})( jQuery );
+})(jQuery);
